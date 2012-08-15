@@ -144,6 +144,7 @@ public class SpringForceModel extends JPanel {
         display.setBackground(Color.WHITE);
         
         // main display controls
+        display.addControlListener(new FinalControlListener());
         display.addControlListener(new FocusControl(1));
         display.addControlListener(new DragControl());
         display.addControlListener(new PanControl());
@@ -151,6 +152,7 @@ public class SpringForceModel extends JPanel {
         display.addControlListener(new WheelZoomControl());
         display.addControlListener(new ZoomToFitControl());
         display.addControlListener(new NeighborHighlightControl());
+        
 
         // overview display
 //        Display overview = new Display(vis);
