@@ -2,31 +2,14 @@ package drawing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
-
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.KeyStroke;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
+import analysis.ratio;
 
 import prefuse.Constants;
 import prefuse.Display;
@@ -45,7 +28,6 @@ import prefuse.controls.WheelZoomControl;
 import prefuse.controls.ZoomControl;
 import prefuse.controls.ZoomToFitControl;
 import prefuse.data.Graph;
-import prefuse.data.Table;
 import prefuse.data.Tuple;
 import prefuse.data.event.TupleSetListener;
 import prefuse.data.io.GraphGMLReader;
@@ -53,17 +35,11 @@ import prefuse.data.tuple.TupleSet;
 import prefuse.render.DefaultRendererFactory;
 import prefuse.render.LabelRenderer;
 import prefuse.util.ColorLib;
-import prefuse.util.GraphicsLib;
-import prefuse.util.display.DisplayLib;
-import prefuse.util.display.ItemBoundsListener;
-import prefuse.util.io.IOLib;
 import prefuse.util.ui.UILib;
 import prefuse.visual.VisualGraph;
 import prefuse.visual.VisualItem;
 
-/**
- * @author <a href="http://jheer.org">jeffrey heer</a>
- */
+
 public class SpringForceModel extends JPanel {
 	
 	
@@ -122,6 +98,7 @@ public class SpringForceModel extends JPanel {
         
         ActionList animate = new ActionList(Activity.INFINITY);
         animate.add(new ForceDirectedLayout(graph));
+        //TODO change the spring constant
         animate.add(fill);
         animate.add(new RepaintAction());
         
@@ -187,22 +164,16 @@ public class SpringForceModel extends JPanel {
     }
     
     // ------------------------------------------------------------------------
-    // Main and demo methods
+    //  visual methods
     
-    public static void main(String[] args) throws Exception{
-        UILib.setPlatformLookAndFeel();
-        GraphGMLReader a=new GraphGMLReader(); 
-        Graph g=a.readGraph("polbooks.gml");
-        JFrame frame = demo(g, "value");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+ 
     
-    public static JFrame demo(Graph g, String label) {
+    public static JFrame visual(Graph g, String label) {
         final SpringForceModel view = new SpringForceModel(g, label);
         
         
         // launch window
-        JFrame frame = new JFrame("p r e f u s e  |  g r a p h v i e w");
+        JFrame frame = new JFrame("spring force model");
         frame.setContentPane(view);
         frame.pack();
         frame.setVisible(true);
