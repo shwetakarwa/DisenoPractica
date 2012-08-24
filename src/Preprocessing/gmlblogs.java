@@ -10,7 +10,7 @@ public class gmlblogs
 	{
 		try 
 		{
-			BufferedReader in = new BufferedReader(new FileReader("polblogs_nonedited.gml"));
+			BufferedReader in = new BufferedReader(new FileReader("polblogs_unedited.gml"));
 			FileWriter writer = new FileWriter("polblogs.gml");
 			String t;
 			int size;

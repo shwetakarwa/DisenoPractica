@@ -5,17 +5,19 @@ import java.util.Random;
 import prefuse.data.Graph;
 import prefuse.data.Node;
 
-public class random_graph {
-
+public class random_graph 
+{
 	/**
 	 * @param args
 	 */
-	public static Graph ran_graph(int num_node,int num_edge,int[] num,int m) {
-		Graph graph = new Graph(false);
+	public static Graph ran_graph(int num_node,int num_edge, int[] num,int m, boolean dir) 
+	{
+		Graph graph = new Graph(dir);
 		graph.addColumn("value", String.class);
 		for(int i=0;i<3;i++)
 		{
-			for(int j=0;j<num[i];j++){
+			for(int j=0;j<num[i];j++)
+			{
 				Node n= graph.addNode();
 				n.set("value", String.valueOf(i));
 			}
@@ -30,18 +32,18 @@ public class random_graph {
 			if(graph.getEdge(first,second)==-1 && first!=second){
 				graph.addEdge(first, second);
 			}
-			else{
+			else
+			{
 				i--;
 			}
-			
 		}
 		ratio.init_ratio(graph);
 		return graph;
 	}
 
-	public static void r_graphs(int num_node,int num_edge,int[] num){
+	public static void r_graphs(int num_node,int num_edge,int[] num, boolean dir){
 		for(int i=0;i<1;i++){
-			Graph g=ran_graph(num_node,num_edge,num,2);
+			Graph g=ran_graph(num_node,num_edge,num,2, dir);
 			/*TupleSet tup=g.getEdges();
 	   		int totaledge=g.getEdgeCount();
 	   		Iterator<Tuple> a= tup.tuples();
@@ -51,5 +53,4 @@ public class random_graph {
 	   		}*/
 		}
 	}
-
 }

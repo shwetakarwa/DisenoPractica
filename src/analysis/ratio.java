@@ -27,7 +27,7 @@ public class ratio {
    			}
    		}
    		float ratio=(float)sim_edge/totaledge;
-   		System.out.println(ratio);
+   		//System.out.println(ratio);
    		return ratio;
    	}
 	
@@ -51,9 +51,9 @@ public class ratio {
    			else num[2]++;
    			}
    			
-   		System.out.println(num[0]);
-   		System.out.println(num[1]);
-   		System.out.println(num[2]);
+   		//System.out.println(num[0]);
+   		//System.out.println(num[1]);
+   		//System.out.println(num[2]);
    		return num;
 	}
 }
