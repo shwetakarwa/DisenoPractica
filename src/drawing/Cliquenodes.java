@@ -81,6 +81,11 @@ public class Cliquenodes {
 		marker[n]=false;
 	}
 	public void makeclique(Graph g,Cliquecontainer a){
+		
+		for(int i=0;i<a.size;i++){
+			System.out.print(a.v[i]+ " ");
+		}
+		System.out.println(" cliqur");
 		int n=g.getNodeCount();
 		Node n1=g.addNode();
 		n1.set(0,n);
@@ -242,15 +247,37 @@ public class Cliquenodes {
 		for(int i=0;i<a.length;i++){
 			a[i]=i;
 		}
-		int[] b=getClique(g, a, num);
+		int[] b=getClique(g, a, 5);
 		int cnt=0;
-		while(b!=null&&cnt<100){
-			System.out.print(getcount(g)+ " ");
+		while(b!=null&&cnt<25){
+			//System.out.print(getcount(g)+ " ");
 			makeclique(g,b);
-			System.out.println(getcount(g)+ " ");
+			//System.out.println(getcount(g)+ " ");
 			//displaynodes(g);
 			cnt++;
-			b=getClique(g,a,num);
+			b=getClique(g,a,5);
+		
+		}
+		b=getClique(g, a, 4);
+		cnt=0;
+		while(b!=null&&cnt<50){
+			//System.out.print(getcount(g)+ " ");
+			makeclique(g,b);
+			//System.out.println(getcount(g)+ " ");
+			//displaynodes(g);
+			cnt++;
+			b=getClique(g,a,4);
+		
+		}
+		b=getClique(g, a, 3);
+		cnt=0;
+		while(b!=null&&cnt<100){
+			//System.out.print(getcount(g)+ " ");
+			makeclique(g,b);
+			//System.out.println(getcount(g)+ " ");
+			//displaynodes(g);
+			cnt++;
+			b=getClique(g,a,3);
 		
 		}
 		removemarkednodes(g);
@@ -277,11 +304,7 @@ public class Cliquenodes {
 					k++;
 				}
 			}
-		}
-		for (int p=0;p<b.length;p++){
-			if(!marker[b[p]]){
-				System.out.print(marker[b[p]]);
-			}
+			
 		}
 		return b;
 	}
@@ -305,8 +328,11 @@ public class Cliquenodes {
 		}
 		int i=0;
 		while(g1==null && i<n){
-			b=addadjacentnodes(g,a,i);
-			g1=getClique(g,b,num-1);
+			if(marker[a[i]]){
+				b=addadjacentnodes(g,a,i);
+				g1=getClique(g,b,num-1);
+
+			}
 			i++;
 		}
 		if(i==n&&g1==null){
@@ -316,7 +342,7 @@ public class Cliquenodes {
 		for(int l=0;l<g1.length;l++){
 			g2[l]=g1[l];
 		}
-		g2[g2.length-1]=i;
+		g2[g2.length-1]=a[i-1];
 		return g2;
 	}
 }

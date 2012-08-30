@@ -30,8 +30,9 @@ public class Main {
 	    Cliquenodes cliquenodes=new Cliquenodes(g.getNodeCount());
 	    
 	    System.out.println(g.getNodeCount()+"hi");
-	    g=cliquenodes.getGraph(g,5);
-	    
+	   // g=cliquenodes.getGraph(g,5);
+	    g=cliquenodes.getcliquegraph(g, 10);
+	    //g=cliquenodes.getGraph(g, 7);
 	    System.out.println(g.getNodeCount()+"hi");
 	   /* TupleSet m=g.getNodes();
 		Iterator<Tuple> b=m.tuples();
