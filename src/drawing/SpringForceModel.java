@@ -35,21 +35,22 @@ import prefuse.data.tuple.TupleSet;
 import prefuse.render.DefaultRendererFactory;
 import prefuse.render.LabelRenderer;
 import prefuse.util.ColorLib;
+import prefuse.util.force.ForceSimulator;
 import prefuse.util.ui.UILib;
 import prefuse.visual.VisualGraph;
 import prefuse.visual.VisualItem;
 
 
-public class SpringForceModel extends JPanel {
-	
-	
+public class SpringForceModel extends JPanel 
+{	
     private static final String graph = "graph";
     private static final String nodes = "graph.nodes";
     private static final String edges = "graph.edges";
 
     private Visualization m_vis;
     
-    public SpringForceModel(Graph g, String label) {
+    public SpringForceModel(Graph g, String label) 
+    {
     	super(new BorderLayout());
     	System.out.println("phew");
         // create a new, empty visualization for our data
@@ -70,7 +71,8 @@ public class SpringForceModel extends JPanel {
         
         // fix selected focus nodes
         TupleSet focusGroup = m_vis.getGroup(Visualization.FOCUS_ITEMS); 
-        focusGroup.addTupleSetListener(new TupleSetListener() {
+        focusGroup.addTupleSetListener(new TupleSetListener() 
+        {
             public void tupleSetChanged(TupleSet ts, Tuple[] add, Tuple[] rem)
             {	
             	Iterator<Tuple> a=ts.tuples();
@@ -98,6 +100,8 @@ public class SpringForceModel extends JPanel {
         
         ActionList animate = new ActionList(Activity.INFINITY);
         animate.add(new ForceDirectedLayout(graph));
+        ForceSimulator fsim = ((ForceDirectedLayout)animate.get(0)).getForceSimulator();
+        fsim.setSpeedLimit((float).05);
         //TODO change the spring constant
         animate.add(fill);
         animate.add(new RepaintAction());
@@ -132,10 +136,6 @@ public class SpringForceModel extends JPanel {
         
 
         // overview display
-//        Display overview = new Display(vis);
-//        overview.setSize(290,290);
-//        overview.addItemBoundsListener(new FitOverviewListener());
-        
         display.setForeground(Color.GRAY);
         display.setBackground(Color.WHITE);
         
