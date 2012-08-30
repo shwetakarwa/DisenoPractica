@@ -1,25 +1,43 @@
 package drawing;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JPopupMenu;
 
-import prefuse.controls.ControlAdapter;
+import prefuse.Visualization;
 import prefuse.controls.Control;
+import prefuse.controls.ControlAdapter;
+import prefuse.data.Graph;
+import prefuse.data.Tuple;
+import prefuse.data.io.GraphGMLReader;
 import prefuse.visual.NodeItem;
 import prefuse.visual.VisualItem;
 
 public class FinalControlListener extends ControlAdapter implements Control {
-	public void itemClicked(VisualItem item, MouseEvent e) 
+	JPopupMenu jpub;
+		
+	
+	public void itemEntered(VisualItem item, MouseEvent e)
 	{
+				
+		item.setSize(item.getStartSize()*3);
 		if(item instanceof NodeItem)
 		{
-			int a=(Integer) item.get("id");
-			String id = "";
-			id=id+a;
+			
 			String label = ((String) item.get("label"));
-			JPopupMenu jpub = new JPopupMenu();
-			jpub.add("Id: " + id);
-			jpub.add("Label: " + label);
-			jpub.show(e.getComponent(),(int)e.getX(), (int) e.getY());
+			int ID = ((Integer) item.get("id"));
+			//JPopupMenu jpub = new JPopupMenu();
+			jpub = new JPopupMenu();
+			jpub.add(ID+". " + label);
+			//jpub.add("ID: "+ ID);
+			jpub.show(e.getComponent(),(int) e.getX()+10,
+                            (int) e.getY()+10);
+			
 		}
+				
+	}
+	public void itemExited(VisualItem item, MouseEvent e)
+	{
+		item.setSize(item.getStartSize());	
+		jpub.setVisible(false);
 	}
 }

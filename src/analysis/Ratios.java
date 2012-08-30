@@ -1,5 +1,6 @@
 package analysis;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import prefuse.data.Graph;
@@ -7,20 +8,21 @@ import prefuse.data.Node;
 import prefuse.data.Tuple;
 import prefuse.data.tuple.TupleSet;
 
-public class ratio 
+public class Ratios 
 {	
 	/**
-	 * Gives the ratio of number of edges between similar types of nodes to total edges
+	 * Get the list of edges whose two nodes are of different types
 	 * 
-	 * @param 
-	 * @return Graph Random graph generated 
+	 * @param g Graph 
+	 * @return ArrayList<Edge> ArrayList of edges whose two nodes are of different types
 	 */
-	public static float getSimEdgesRatio(Graph g) 
+	public ArrayList<Tuple> getDiffEdge(Graph g) 
 	{
 		TupleSet tup=g.getEdges();
    		int totaledge=g.getEdgeCount();
    		int sim_edge=0;
    		Iterator<Tuple> a= tup.tuples();
+   		ArrayList<Tuple> diff_edges = new ArrayList<Tuple>();
    		while(a.hasNext())
    		{
    			Tuple n=a.next();
@@ -31,15 +33,26 @@ public class ratio
    			if(src.equals(tar))
    			{
    				sim_edge++;
-   			}	
+   			}
+   			else
+   			{
+   				diff_edges.add(n);
+   			}
    		}
-   		float ratio=(float)sim_edge/totaledge;
-   		return ratio;
+   		return diff_edges;
+   		//float ratio=(float)sim_edge/totaledge;
+   		//return ratio;
 	}
 	
-	public static void deg_variation(Graph g)
+	/**
+	 * Prints list of all the nodes that have degree more than mean+std_dev of degree and and ratio of such nodes in each group
+	 * 
+	 * @param g Graph 
+	 */
+	public ArrayList<Node> degreeVariaton(Graph g)
 	{
-		int[] num_node=num_groups(g);
+		ArrayList<Node> popular_nodes = new ArrayList<Node>();
+		int[] num_node=numGroups(g);
 		int a1=0;
 		int a2=0;
 		int a3=0;
@@ -60,33 +73,42 @@ public class ratio
    			int cur_deg=g.getDegree(cur);
    			if(cur_deg>=(int)(standard_dev+mean))
    			{
+   				popular_nodes.add(cur);
+   				System.out.println("Node: " + cur + " Degree: " + cur_deg);
    				if(cur.getString("value").equals("c") || cur.getString("value").equals("0"))
    				{
    					a1++;
    				}
-   				else if(cur.getString("value").equals("l") || cur.getString("value").equals("1"))
+   				else if(cur.getString("value").equals("l") || cur.getString("value").equals("-1"))
    				{
    					a2++;
    				}
-   				else a3++;
+   				else 
+   					a3++;
    			}
    		}
    		if(num_node[0]!=0)
-   			System.out.println("popular nodes in first group:"+(double)a1/num_node[0]);
+   			System.out.println("Popular nodes in first group:"+(double)a1/num_node[0]);
    	   	if(num_node[1]!=0)
-   	   		System.out.println("popular nodes in second group:"+(double)a2/num_node[1]);
+   	   		System.out.println("Popular nodes in second group:"+(double)a2/num_node[1]);
    	   	if(num_node[2]!=0)
-   	   		System.out.println("popular nodes in third group:"+(double)a3/num_node[2]);
+   	   		System.out.println("Popular nodes in third group:"+(double)a3/num_node[2]);
+   	   	return popular_nodes;
 	}
 	
-	public static void bridge_elem(Graph g)
+	/**
+	 * Prints list of all the nodes whose more than half the neighbours are of different type and ratio of such nodes in each group
+	 * 
+	 * @param g Graph 
+	 */
+	public ArrayList<Node> bridgeElements(Graph g)
 	{
-		int[] num_node=num_groups(g);
+		int[] num_node=numGroups(g);
    		int totalnode=g.getNodeCount();
    		int a1=0;
    		int a2=0;
    		int a3=0;
-   		
+   		ArrayList<Node> bridging_nodes = new ArrayList<Node>();
    		for(int i=0;i<totalnode;i++)
    		{
    			Node cur=g.getNode(i);
@@ -102,10 +124,11 @@ public class ratio
    			}
    			if(diff_neigh>(tot_neigh/2))
    			{
+   				bridging_nodes.add(cur);
    				System.out.println("Node: "+cur + " Total Degree: "+ tot_neigh + " Different Neighbours: " + diff_neigh);
    				if(cur.getString("value").equals("c") || cur.getString("value").equals("0"))
    					a1++;
-   				else if(cur.getString("value").equals("l") || cur.getString("value").equals("1"))
+   				else if(cur.getString("value").equals("l") || cur.getString("value").equals("-1"))
    					a2++;
    				else 
    					a3++;
@@ -117,9 +140,16 @@ public class ratio
    			System.out.println("second group:"+(double)a2/num_node[1]);
    		if(num_node[2]!=0)
    			System.out.println("third group:"+(double)a3/num_node[2]);
+   		return bridging_nodes;
 	}
-		
-	public static int[] num_groups(Graph g) 
+	
+	/**
+	 * Gives the number of each type
+	 * 
+	 * @param g Graph 
+	 * @return int[] The number of each type
+	 */
+	public static int[] numGroups(Graph g) 
 	{
 		TupleSet tup=g.getNodes();
    		int num[]=new int[3];
@@ -132,7 +162,7 @@ public class ratio
    			Tuple n=a.next();
    			if(n.getString("value").equals("c") || n.getString("value").equals("0"))
    				num[0]++;
-   			else if(n.getString("value").equals("l") || n.getString("value").equals("1"))
+   			else if(n.getString("value").equals("l") || n.getString("value").equals("-1"))
    				num[1]++;
    			else 
    				num[2]++;

@@ -1,5 +1,9 @@
 package drawing;
 
+/**
+ * class to store elements in a clique; two constructors 1)to generate new container of given size 2)copy elements from a given container 
+ * 
+ */
 public class Cliquecontainer {
 	int[] v;
 	int size;
@@ -16,6 +20,7 @@ public class Cliquecontainer {
 			v[i]=a[i];
 		}
 	}
+	
 	void add(int n){
 		v[size]=n;
 		size++;

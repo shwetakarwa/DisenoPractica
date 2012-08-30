@@ -6,8 +6,14 @@ import java.util.Iterator;
 import prefuse.data.Graph;
 import prefuse.data.Node;
 
-public class triads 
+public class Triads 
 {
+	/**
+	 * Gives a Global Clustering Coefficient of a graph
+	 * 
+	 * @param g Graph
+	 * @return Global Clustering Coefficient
+	 */
 	public static float globalCoefficient(Graph g)
 	{
 		int tr=0;
@@ -57,7 +63,13 @@ public class triads
 		return (float)tr/total_connected;
 	}
 	
-	public static void num_triads(Graph g)
+
+	/**
+	 * Prints total number of triads in the given graph, and ratios of all nodes of them being of same type, two of same type, all of different types
+	 * 
+	 * @param g Graph
+	 */
+	public static void numTriads(Graph g)
 	{
 		int total_triads=0;
 		int all_same = 0;
@@ -135,6 +147,13 @@ public class triads
 		System.out.println((float) all_diff/total_triads+" No node of same type ");
 	}	
 	
+
+	/**
+	 * Gives a Local Clustering Coefficient of a graph
+	 * 
+	 * @param g Graph
+	 * @return Local Clustering Coefficient
+	 */
 	public static float localCoefficient(Graph g)
 	{
 		int n=g.getNodeCount();

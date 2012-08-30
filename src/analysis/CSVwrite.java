@@ -1,9 +1,11 @@
 package analysis;
 
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 import prefuse.data.Graph;
 import prefuse.data.Node;
+import prefuse.data.Tuple;
 
 public class CSVwrite 
 {
@@ -16,24 +18,19 @@ public class CSVwrite
 			int num_edges = g.getEdgeCount();
 			boolean dir = g.isDirected();
 			Node n;
-			ratio r = new ratio();
+			Ratios r = new Ratios();
 			RandomGraph x = new RandomGraph();
-			int[] num = r.num_groups(g);
-			triads t = new triads();
+			int[] num = r.numGroups(g);
+			Triads t = new Triads();
 			for(int i=0;i<100;i++)
 			{
 				Graph r_graph = x.randGraph(num_nodes, num_edges, num, i+2, dir);
-				//int deg = 0;
-				//for (int j=0; j<num_nodes; j++)
-				//{
-				//	n = g.getNode(j);
-				//	deg = deg+n.getDegree();
-				//}
-				//float avg_deg = deg/num_nodes;
-				float ratio = r.getSimEdgesRatio(r_graph);
+				ArrayList<Tuple> diff_edges = r.getDiffEdge(r_graph);
+				int size = diff_edges.size();
+				float ratio = (float) size/num_edges;
 				float global_coeff = t.globalCoefficient(r_graph);
 				float local_coeff = t.localCoefficient(r_graph);
-				writer.append(Float.toString(ratio));
+				writer.append(Float.toString(1-ratio));
 				writer.append(',');
 				writer.append(Float.toString(global_coeff));
 				writer.append(',');
