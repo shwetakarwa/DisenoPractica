@@ -32,7 +32,7 @@ public class RatioButton extends JMenuItem
 	}
 	/**
 	 *Reads the dataset and returns the graph 
-	 * @return
+	 * @return g Graph returns the graph
 	 */
 	public Graph readGraph1()
 	{
@@ -46,18 +46,16 @@ public class RatioButton extends JMenuItem
 	}
 	/**
 	 * Handles Mouse Click
+	 * 
+	 * @param e MouseEvent the mouse action performed
 	 */
 	public void processMouseEvent(MouseEvent e)
 	{
 
 		if (e.getButton()==1)
 		{
-
-
 			Graph g=readGraph1();
-			Tuple t=g.getNode(0);
-			//Visualization m_viz=item.getVisualization();
-			//VisualItem x=s.getVisualItem("graph.nodes", t);
+			Tuple t=g.getNode(0);			
 			Ratios analysis=new Ratios();
 			ArrayList<Tuple> ratio=analysis.getDiffEdge(g);
 
@@ -65,24 +63,10 @@ public class RatioButton extends JMenuItem
 			for (k=0;k<ratio.size();k++)
 			{
 				VisualItem x=s.getVisualItem("graph.edges", ratio.get(k));
-				//x.setHighlighted(true);
 				x.setStroke(new BasicStroke(3));
-
-
 			}
 
 		}
-		if (e.getButton()==0)
-		{
-
-			Graph g=readGraph1();
-			Tuple t=g.getNode(0);
-			//Visualization m_viz=item.getVisualization();
-			VisualItem x=s.getVisualItem("graph.nodes", t);
-			x.setSize(x.getStartSize());
-
-		}
-
 	}
 
 

@@ -33,7 +33,7 @@ public class ClearButton extends JMenuItem
 	}
 	/**
 	 *Reads the dataset and returns the graph 
-	 * @return
+	 * @return g Graph returns the graph
 	 */
 	public Graph readGraph1()
 	{
@@ -47,35 +47,33 @@ public class ClearButton extends JMenuItem
 	}
 	/**
 	 * Handles Mouse Click
+	 * 
+	 * @param e MouseEvent the mouse action performed
 	 */
 	public void processMouseEvent(MouseEvent e)
 	{
 
 		if (e.getButton()==1)
 		{
-
-
 			Graph g=readGraph1();
-
-			//Visualization m_viz=item.getVisualization();
-			//VisualItem x=s.getVisualItem("graph.nodes", t);
-
 			TupleSet nodes=g.getNodes();
 			TupleSet edges=g.getEdges();
-
 			Iterator<Tuple> all=nodes.tuples();
 			Iterator<Tuple> alledges=edges.tuples();
-
 			while (all.hasNext())
 			{
 				VisualItem x=s.getVisualItem("graph.nodes", all.next());
 				x.setHighlighted(false);
-				x.setSize(x.getStartSize());
+				
+				String test=((String) x.get("label")).substring(0,6);
+				if (!test.equals("Clique"))
+				{
+					x.setSize(x.getStartSize());	
+				}
 			}
 			while (alledges.hasNext())
 			{
 				VisualItem x=s.getVisualItem("graph.edges", alledges.next());
-				//x.setHighlighted(false);
 				x.setStroke(new BasicStroke(1));
 			}
 

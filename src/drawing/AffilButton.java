@@ -2,15 +2,22 @@ package drawing;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
 import javax.swing.JMenuItem;
-import analysis.Ratios;
+
 import prefuse.Visualization;
 import prefuse.data.Graph;
 import prefuse.data.Node;
 import prefuse.data.io.GraphGMLReader;
 import prefuse.visual.VisualItem;
+import analysis.Ratios;
 
 @SuppressWarnings("serial")
+/**
+ * 
+ * The Other Affiliations Button
+ *
+ */
 public class AffilButton extends JMenuItem
 {
 	Visualization s;
@@ -30,7 +37,8 @@ public class AffilButton extends JMenuItem
 	}
 	/**
 	 *Reads the dataset and returns the graph 
-	 * @return
+	 *
+	 * @return g Graph returns the graph
 	 */
 	public Graph readGraph1()
 	{
@@ -44,6 +52,8 @@ public class AffilButton extends JMenuItem
 	}
 	/**
 	 * Handles Mouse Click
+	 * 
+	 * @param e MouseEvent the mouse action performed
 	 */
 	public void processMouseEvent(MouseEvent e)
 	{
@@ -51,9 +61,6 @@ public class AffilButton extends JMenuItem
 		if (e.getButton()==1)
 		{
 			Graph g=readGraph1();
-
-			//Visualization m_viz=item.getVisualization();
-			//VisualItem x=s.getVisualItem("graph.nodes", t);
 			Ratios analysis=new Ratios();
 			ArrayList<Node> ratio=analysis.bridgeElements(g);
 
@@ -61,7 +68,8 @@ public class AffilButton extends JMenuItem
 			for (k=0;k<ratio.size();k++)
 			{
 				VisualItem x=s.getVisualItem("graph.nodes", ratio.get(k));
-				x.setSize(x.getStartSize()*1.7);
+				if (!((String) x.get("label")).equals("clique"))
+					x.setSize(x.getStartSize()*1.7);
 				x.setHighlighted(true);
 			}
 		}

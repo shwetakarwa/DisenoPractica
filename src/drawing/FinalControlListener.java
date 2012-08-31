@@ -15,29 +15,44 @@ import prefuse.visual.VisualItem;
 public class FinalControlListener extends ControlAdapter implements Control {
 	JPopupMenu jpub;
 		
-	
+	/**
+	 * Highlights, magnifies and views node information when the mouse is passed over it
+	 * 
+	 * @param item VisualItem the node over which the mouse hovers
+	 * @param e MouseEvent the mouse event 
+	 */
 	public void itemEntered(VisualItem item, MouseEvent e)
 	{
-				
-		item.setSize(item.getStartSize()*3);
+		String test=((String) item.get("label")).substring(0,6);
+		if (!test.equals("Clique"))
+		{
+			System.out.println("YO");
+			item.setSize(item.getStartSize()*3);
+		}
 		if(item instanceof NodeItem)
 		{
-			
 			String label = ((String) item.get("label"));
 			int ID = ((Integer) item.get("id"));
-			//JPopupMenu jpub = new JPopupMenu();
 			jpub = new JPopupMenu();
 			jpub.add(ID+". " + label);
-			//jpub.add("ID: "+ ID);
 			jpub.show(e.getComponent(),(int) e.getX()+10,
-                            (int) e.getY()+10);
-			
+                            (int) e.getY()+10);	
 		}
 				
 	}
+	/**
+	 * Handles mouse exit condition
+	 * 
+	 * @param item VisualItem the node over which the mouse hovers
+	 * @param e MouseEvent the mouse event
+	 */
 	public void itemExited(VisualItem item, MouseEvent e)
 	{
-		item.setSize(item.getStartSize());	
+		String test=((String) item.get("label")).substring(0,6);
+		if (!test.equals("Clique"))
+		{
+			item.setSize(item.getStartSize());	
+		}
 		jpub.setVisible(false);
 	}
 }

@@ -30,7 +30,7 @@ public class DegreeButton extends JMenuItem
 	}
 	/**
 	 *Reads the dataset and returns the graph 
-	 * @return
+	 * @return g Graph returns the graph
 	 */
 	public Graph readGraph1()
 	{
@@ -45,10 +45,11 @@ public class DegreeButton extends JMenuItem
 	}
 	/**
 	 * Handles Mouse Click
+	 * 
+	 * @param e MouseEvent the mouse action performed
 	 */
 	public void processMouseEvent(MouseEvent e)
 	{
-
 		if (e.getButton()==1)
 		{
 			Graph g=readGraph1();
@@ -59,7 +60,8 @@ public class DegreeButton extends JMenuItem
 			for (k=0;k<ratio.size();k++)
 			{
 				VisualItem x=s.getVisualItem("graph.nodes", ratio.get(k));
-				x.setSize(x.getStartSize()*1.7);
+				if (!((String) x.get("label")).equals("clique"))
+					x.setSize(x.getStartSize()*1.7);
 				x.setHighlighted(true);
 			}
 		}
