@@ -23,6 +23,7 @@ public class VisualizeBlogs {
 	    Graph g=a.readGraph("polblogs.gml");
 	    Cliquenodes cliquenodes=new Cliquenodes(g.getNodeCount());
 	    g=cliquenodes.getGraph(g,7);
+	    
 	    //g=cliquenodes.getcliquegraph(g);
 	    JFrame frame = SpringForceModel.visual(g, "value",false);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
